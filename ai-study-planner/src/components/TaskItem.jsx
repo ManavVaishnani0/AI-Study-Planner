@@ -1,8 +1,8 @@
-function TaskItem({ name, hours }) {
+function TaskItem({ name, hours, deleteTask }) {
   return (
     <div>
       <p>{name} - {hours} hours</p>
-      <button>Delete</button>
+      <button onClick={deleteTask}>Delete</button>
     </div>
   );
 }
