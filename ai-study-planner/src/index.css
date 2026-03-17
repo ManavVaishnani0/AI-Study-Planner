@@ -1,40 +1,62 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
 }
 
-.container {
-    background: white;
-    padding: 30px;
-    width: 420px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
+/* Card UI */
+.card {
+  background: white;
+  padding: 30px;
+  width: 420px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Form layout */
 input {
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+  padding: 10px;
+  margin: 8px 0;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
 button {
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    background: #667eea;
-    color: white;
-    cursor: pointer;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #667eea;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
 }
 
-li {
-    background: #f3f3f3;
-    padding: 8px;
-    margin-top: 8px;
-    border-radius: 8px;
+button:hover {
+  background: #5563c1;
+}
+
+/* Task items */
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  background: #f3f3f3;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+  align-items: center;
+}
+
+.task-item button {
+  width: auto;
+  padding: 5px 10px;
+  background: red;
 }

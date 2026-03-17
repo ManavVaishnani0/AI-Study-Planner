@@ -28,12 +28,14 @@ function App() {
   };
 
   return (
-    <div className="container">
+  <div className="app-container">
+    <div className="card">
       <h1>AI Study Planner</h1>
 
       <TaskForm addTask={addTask} />
       <TaskList tasks={tasks} deleteTask={deleteTask} />
     </div>
+  </div>
   );
 }
 
