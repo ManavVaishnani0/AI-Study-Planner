@@ -16,8 +16,8 @@ function App() {
   }, [tasks]);
 
   // Add task
-  const addTask = (name, hours) => {
-    const newTask = { name, hours };
+  const addTask = (name, hours, deadline) => {
+    const newTask = { name, hours, deadline };
     setTasks([...tasks, newTask]);
   };
 

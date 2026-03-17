@@ -1,7 +1,10 @@
-function TaskItem({ name, hours, deleteTask }) {
+function TaskItem({ name, hours, deadline, deleteTask }) {
   return (
     <div className="task-item">
-      <p>{name} - {hours} hours</p>
+      <div>
+        <p>{name}</p>
+        <small>{hours} hrs | Due: {deadline}</small>
+      </div>
       <button onClick={deleteTask}>Delete</button>
     </div>
   );

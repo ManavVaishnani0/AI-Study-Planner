@@ -8,6 +8,7 @@ function TaskList({ tasks, deleteTask }) {
           key={index}
           name={task.name}
           hours={task.hours}
+          deadline={task.deadline}
           deleteTask={() => deleteTask(index)}
         />
       ))}

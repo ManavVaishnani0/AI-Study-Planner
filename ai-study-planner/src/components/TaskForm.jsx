@@ -3,14 +3,16 @@ import { useState } from "react";
 function TaskForm({ addTask }) {
   const [name, setName] = useState("");
   const [hours, setHours] = useState("");
+  const [deadline, setDeadline] = useState("");
 
   const handleSubmit = () => {
-    if (name === "" || hours === "") return;
+    if (name === "" || hours === "" || deadline === "") return;
 
-    addTask(name, hours);
+    addTask(name, hours, deadline);
 
     setName("");
     setHours("");
+    setDeadline("");
   };
 
   return (
@@ -27,6 +29,12 @@ function TaskForm({ addTask }) {
         placeholder="Hours Needed"
         value={hours}
         onChange={(e) => setHours(e.target.value)}
+      />
+
+      <input
+        type="date"
+        value={deadline}
+        onChange={(e) => setDeadline(e.target.value)}
       />
 
       <button onClick={handleSubmit}>Add Task</button>
