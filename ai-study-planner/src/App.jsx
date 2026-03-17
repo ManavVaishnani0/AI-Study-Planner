@@ -27,13 +27,18 @@ function App() {
     setTasks(updatedTasks);
   };
 
+  //Sort Task
+  const sortedTasks = [...tasks].sort((a, b) => {
+    return new Date(a.deadline) - new Date(b.deadline);
+  });
+
   return (
   <div className="app-container">
     <div className="card">
       <h1>AI Study Planner</h1>
 
       <TaskForm addTask={addTask} />
-      <TaskList tasks={tasks} deleteTask={deleteTask} />
+      <TaskList tasks={sortedTasks} deleteTask={deleteTask} />
     </div>
   </div>
   );
