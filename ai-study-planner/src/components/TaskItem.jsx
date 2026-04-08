@@ -2,7 +2,6 @@ import { useState } from "react";
 
 function TaskItem({
   task,
-  index,
   deleteTask,
   toggleComplete,
   editTask,
@@ -31,15 +30,21 @@ function TaskItem({
         )}
 
         <small>
-          {task.hours} hrs | Due: {task.deadline}
+          {task.hours} hrs • Due: {task.deadline}
         </small>
       </div>
 
-      <div>
-        <button onClick={() => toggleComplete(task.id)}>✔</button>
+      <div className="task-buttons">
+        <button
+          className="complete-btn"
+          onClick={() => toggleComplete(task.id)}
+        >
+          ✔
+        </button>
 
         {editing ? (
           <button
+            className="edit-btn"
             onClick={() => {
               editTask(task.id, newName);
               setEditing(false);
@@ -48,19 +53,29 @@ function TaskItem({
             Save
           </button>
         ) : (
-          <button onClick={() => setEditing(true)}>Edit</button>
+          <button className="edit-btn" onClick={() => setEditing(true)}>
+            Edit
+          </button>
         )}
 
-        <button onClick={() => deleteTask(task.id)}>Delete</button>
+        <button
+          className="delete-btn"
+          onClick={() => deleteTask(task.id)}
+        >
+          Delete
+        </button>
 
-        <button onClick={() => setPlan(generatePlan(task))}>
+        <button
+          className="plan-btn"
+          onClick={() => setPlan(generatePlan(task))}
+        >
           Plan
         </button>
       </div>
 
       <div>
         {plan.map((p, i) => (
-          <p key={i}>{p}</p>
+          <p key={i} className="plan-text">{p}</p>
         ))}
       </div>
     </div>

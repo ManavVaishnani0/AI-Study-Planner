@@ -9,7 +9,7 @@ function TaskList({
 }) {
   return (
     <div>
-      {tasks.map((task, index) => (
+      {tasks.map((task) => (
         <TaskItem
           key={task.id}
           task={task}

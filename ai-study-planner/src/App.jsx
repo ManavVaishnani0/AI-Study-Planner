@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
+import { Routes, Route, Link } from "react-router-dom";
+import Dashboard from "./Pages/Dashboard";
 
 function App() {
   const [tasks, setTasks] = useState(() => {
@@ -18,28 +20,28 @@ function App() {
       name,
       hours,
       deadline,
-      completed: false
+      completed: false,
     };
     setTasks([...tasks, newTask]);
   };
 
   const deleteTask = (id) => {
-  setTasks(tasks.filter(task => task.id !== id));
-};
+    setTasks(tasks.filter(task => task.id !== id));
+  };
 
-const toggleComplete = (id) => {
-  const updated = tasks.map(task =>
-    task.id === id ? { ...task, completed: !task.completed } : task
-  );
-  setTasks(updated);
-};
+  const toggleComplete = (id) => {
+    const updated = tasks.map(task =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updated);
+  };
 
-const editTask = (id, newName) => {
-  const updated = tasks.map(task =>
-    task.id === id ? { ...task, name: newName } : task
-  );
-  setTasks(updated);
-};
+  const editTask = (id, newName) => {
+    const updated = tasks.map(task =>
+      task.id === id ? { ...task, name: newName } : task
+    );
+    setTasks(updated);
+  };
 
   const generatePlan = (task) => {
     const today = new Date();
@@ -60,22 +62,43 @@ const editTask = (id, newName) => {
   );
 
   return (
-    <div className="app-container">
-      <div className="card">
-        <h1>AI Study Planner</h1>
+  <div className="app-container">
+    <div className="card">
 
-        <TaskForm addTask={addTask} />
-
-        <TaskList
-          tasks={sortedTasks}
-          deleteTask={deleteTask}
-          toggleComplete={toggleComplete}
-          editTask={editTask}
-          generatePlan={generatePlan}
-        />
+      {/* NAVBAR */}
+      <div style={{ marginBottom: "15px" }}>
+        <Link to="/" style={{ marginRight: "10px", color: "white" }}>
+          Home
+        </Link>
+        <Link to="/dashboard" style={{ color: "white" }}>
+          Dashboard
+        </Link>
       </div>
+
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <h1>AI Study Planner</h1>
+              <TaskForm addTask={addTask} />
+              <TaskList
+                tasks={sortedTasks}
+                deleteTask={deleteTask}
+                toggleComplete={toggleComplete}
+                editTask={editTask}
+                generatePlan={generatePlan}
+              />
+            </>
+          }
+        />
+
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+
     </div>
-  );
+  </div>
+);
 }
 
 export default App;

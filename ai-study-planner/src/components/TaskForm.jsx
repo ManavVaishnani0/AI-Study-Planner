@@ -16,7 +16,7 @@ function TaskForm({ addTask }) {
   };
 
   return (
-    <div>
+    <div style={{ marginBottom: "15px" }}>
       <input
         type="text"
         placeholder="Enter Subject"
@@ -39,6 +39,7 @@ function TaskForm({ addTask }) {
 
       <button onClick={handleSubmit}>Add Task</button>
     </div>
+    
   );
 }
 

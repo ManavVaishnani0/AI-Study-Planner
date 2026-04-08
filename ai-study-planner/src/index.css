@@ -1,64 +1,110 @@
+/* Reset */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: "Segoe UI", sans-serif;
+  background: #0f172a;
 }
 
+/* Center container */
 .app-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
-/* Card UI */
+/* Main card */
 .card {
-  background: white;
+  background: #1e293b;
   padding: 30px;
-  width: 420px;
+  width: 450px;
   border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  color: white;
 }
 
-/* Form layout */
+/* Title */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
 input {
-  padding: 10px;
-  margin: 8px 0;
   width: 100%;
+  padding: 12px;
+  margin: 8px 0;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: none;
+  outline: none;
+  background: #334155;
+  color: white;
 }
 
+/* Buttons */
 button {
   padding: 10px;
   border-radius: 8px;
   border: none;
-  background: #667eea;
-  color: white;
   cursor: pointer;
-  width: 100%;
-  margin-top: 10px;
-}
-
-button:hover {
-  background: #5563c1;
-}
-
-/* Task items */
-.task-item {
-  display: flex;
-  justify-content: space-between;
-  background: #f3f3f3;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 8px;
-  align-items: center;
+  margin-top: 5px;
   font-weight: bold;
 }
 
-.task-item button {
-  width: auto;
-  padding: 5px 10px;
-  background: red;
-  margin-left: 5px;
+/* Primary button */
+button {
+  background: #3b82f6;
+  color: white;
+}
+
+/* Task item */
+.task-item {
+  background: #334155;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 12px;
+}
+
+/* Task header */
+.task-item p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Small text */
+.task-item small {
+  color: #cbd5f5;
+}
+
+/* Buttons group */
+.task-buttons {
+  margin-top: 8px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Different buttons */
+.delete-btn {
+  background: #ef4444;
+}
+
+.edit-btn {
+  background: #f59e0b;
+}
+
+.complete-btn {
+  background: #10b981;
+}
+
+.plan-btn {
+  background: #8b5cf6;
+}
+
+/* Plan text */
+.plan-text {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #a5b4fc;
 }
