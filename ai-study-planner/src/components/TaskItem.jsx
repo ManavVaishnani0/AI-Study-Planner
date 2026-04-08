@@ -1,25 +1,68 @@
-function TaskItem({ name, hours, deadline, deleteTask }) {
-  const today = new Date();
-  const dueDate = new Date(deadline);
+import { useState } from "react";
 
-  const diffDays = Math.ceil(
-    (dueDate - today) / (1000 * 60 * 60 * 24)
-  );
-
-  let priority = "Low";
-
-  if (diffDays <= 2) priority = "High";
-  else if (diffDays <= 5) priority = "Medium";
+function TaskItem({
+  task,
+  index,
+  deleteTask,
+  toggleComplete,
+  editTask,
+  generatePlan,
+}) {
+  const [plan, setPlan] = useState([]);
+  const [editing, setEditing] = useState(false);
+  const [newName, setNewName] = useState(task.name);
 
   return (
     <div className="task-item">
       <div>
-        <p>{name}</p>
+        {editing ? (
+          <input
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+          />
+        ) : (
+          <p
+            style={{
+              textDecoration: task.completed ? "line-through" : "none",
+            }}
+          >
+            {task.name}
+          </p>
+        )}
+
         <small>
-          {hours} hrs | Due: {deadline} | Priority: {priority}
+          {task.hours} hrs | Due: {task.deadline}
         </small>
       </div>
-      <button onClick={deleteTask}>Delete</button>
+
+      <div>
+        <button onClick={() => toggleComplete(index)}>✔</button>
+
+        {editing ? (
+          <button
+            onClick={() => {
+              editTask(index, newName);
+              setEditing(false);
+            }}
+          >
+            Save
+          </button>
+        ) : (
+          <button onClick={() => setEditing(true)}>Edit</button>
+        )}
+
+        <button onClick={() => deleteTask(index)}>Delete</button>
+
+        <button onClick={() => setPlan(generatePlan(task))}>
+          Plan
+        </button>
+      </div>
+
+      <div>
+        {plan.map((p, i) => (
+          <p key={i}>{p}</p>
+        ))}
+      </div>
     </div>
   );
 }

@@ -53,10 +53,12 @@ button:hover {
   margin-top: 10px;
   border-radius: 8px;
   align-items: center;
+  font-weight: bold;
 }
 
 .task-item button {
   width: auto;
   padding: 5px 10px;
   background: red;
+  margin-left: 5px;
 }
