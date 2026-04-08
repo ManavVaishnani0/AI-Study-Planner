@@ -36,12 +36,12 @@ function TaskItem({
       </div>
 
       <div>
-        <button onClick={() => toggleComplete(index)}>✔</button>
+        <button onClick={() => toggleComplete(task.id)}>✔</button>
 
         {editing ? (
           <button
             onClick={() => {
-              editTask(index, newName);
+              editTask(task.id, newName);
               setEditing(false);
             }}
           >
@@ -51,7 +51,7 @@ function TaskItem({
           <button onClick={() => setEditing(true)}>Edit</button>
         )}
 
-        <button onClick={() => deleteTask(index)}>Delete</button>
+        <button onClick={() => deleteTask(task.id)}>Delete</button>
 
         <button onClick={() => setPlan(generatePlan(task))}>
           Plan

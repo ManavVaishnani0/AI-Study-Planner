@@ -11,9 +11,8 @@ function TaskList({
     <div>
       {tasks.map((task, index) => (
         <TaskItem
-          key={index}
+          key={task.id}
           task={task}
-          index={index}
           deleteTask={deleteTask}
           toggleComplete={toggleComplete}
           editTask={editTask}

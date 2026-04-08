@@ -13,25 +13,33 @@ function App() {
   }, [tasks]);
 
   const addTask = (name, hours, deadline) => {
-    const newTask = { name, hours, deadline, completed: false };
+    const newTask = {
+      id: Date.now(),
+      name,
+      hours,
+      deadline,
+      completed: false
+    };
     setTasks([...tasks, newTask]);
   };
 
-  const deleteTask = (index) => {
-    setTasks(tasks.filter((_, i) => i !== index));
-  };
+  const deleteTask = (id) => {
+  setTasks(tasks.filter(task => task.id !== id));
+};
 
-  const toggleComplete = (index) => {
-    const updated = [...tasks];
-    updated[index].completed = !updated[index].completed;
-    setTasks(updated);
-  };
+const toggleComplete = (id) => {
+  const updated = tasks.map(task =>
+    task.id === id ? { ...task, completed: !task.completed } : task
+  );
+  setTasks(updated);
+};
 
-  const editTask = (index, newName) => {
-    const updated = [...tasks];
-    updated[index].name = newName;
-    setTasks(updated);
-  };
+const editTask = (id, newName) => {
+  const updated = tasks.map(task =>
+    task.id === id ? { ...task, name: newName } : task
+  );
+  setTasks(updated);
+};
 
   const generatePlan = (task) => {
     const today = new Date();
