@@ -17,10 +17,13 @@ function App() {
   const addTask = (name, hours, deadline) => {
     const newTask = {
       id: Date.now(),
-      name,
-      hours,
+      subject: name,
       deadline,
       completed: false,
+      topics: [
+        { name: "Topic 1", difficulty: "easy" },
+        { name: "Topic 2", difficulty: "medium" }
+      ]
     };
     setTasks([...tasks, newTask]);
   };
@@ -43,7 +46,21 @@ function App() {
     setTasks(updated);
   };
 
-  const generatePlan = (task) => {
+  const estimateTopicTime = (difficulty) => {
+    if (difficulty === "easy") return 2;
+    if (difficulty === "medium") return 4;
+    if (difficulty === "hard") return 6;
+    return 3;
+  };
+
+  const estimateTopicTime = (difficulty) => {
+  if (difficulty === "easy") return 2;
+  if (difficulty === "medium") return 4;
+  if (difficulty === "hard") return 6;
+  return 3;
+};
+
+const generatePlan = (task) => {
   const today = new Date();
   const dueDate = new Date(task.deadline);
 
@@ -53,12 +70,17 @@ function App() {
 
   if (totalDays <= 0) return ["Deadline passed"];
 
-  let totalHours = Number(task.hours);
-  let remainingHours = totalHours;
+  // 🔥 STEP 1: Calculate total hours from topics
+  let totalHours = task.topics.reduce(
+    (sum, topic) => sum + estimateTopicTime(topic.difficulty),
+    0
+  );
 
+  let remainingHours = totalHours;
   const plan = [];
 
-  // 🔥 CASE 1: <= 3 days → daily
+  // 🔥 STEP 2: Schedule based on time (your logic)
+
   if (totalDays <= 3) {
     for (let i = 1; i <= totalDays; i++) {
       let hours = Math.ceil(remainingHours / (totalDays - i + 1));
@@ -67,26 +89,21 @@ function App() {
     }
   }
 
-  // 🔥 CASE 2: 4–29 days → 3-day grouping
   else if (totalDays <= 29) {
     let groupSize = 3;
 
     for (let i = 0; i < totalDays; i += groupSize) {
       let daysInGroup = Math.min(groupSize, totalDays - i);
-
       let remainingGroups = Math.ceil((totalDays - i) / groupSize);
 
       let hours = Math.ceil(remainingHours / remainingGroups);
 
       plan.push(`Days ${i + 1}-${i + daysInGroup}: ${hours} hrs`);
-
       remainingHours -= hours;
     }
   }
 
-  // 🔥 CASE 3: > 29 days → WEEKLY + FIRST WEEK DAILY
   else {
-    // FIRST WEEK (daily breakdown)
     let firstWeekDays = Math.min(7, totalDays);
 
     for (let i = 1; i <= firstWeekDays; i++) {
@@ -95,13 +112,11 @@ function App() {
       remainingHours -= hours;
     }
 
-    // Remaining weeks
     let remainingDays = totalDays - firstWeekDays;
     let weekStart = firstWeekDays + 1;
 
     while (remainingDays > 0) {
       let daysInWeek = Math.min(7, remainingDays);
-
       let remainingWeeks = Math.ceil(remainingDays / 7);
 
       let hours = Math.ceil(remainingHours / remainingWeeks);
@@ -115,6 +130,15 @@ function App() {
       weekStart += 7;
     }
   }
+
+  // 🔥 STEP 3: Add topic breakdown (AI explanation)
+
+  plan.push("------ Topic Breakdown ------");
+
+  task.topics.forEach((topic) => {
+    let hours = estimateTopicTime(topic.difficulty);
+    plan.push(`${topic.name} (${topic.difficulty}) → ${hours} hrs`);
+  });
 
   return plan;
 };
