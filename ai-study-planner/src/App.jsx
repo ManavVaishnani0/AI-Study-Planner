@@ -93,7 +93,7 @@ function App() {
           }
         />
 
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard tasks={tasks} />} />
       </Routes>
 
     </div>
