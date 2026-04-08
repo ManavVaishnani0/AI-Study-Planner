@@ -104,7 +104,8 @@ button {
 
 /* Plan text */
 .plan-text {
-  margin-top: 5px;
-  font-size: 13px;
-  color: #a5b4fc;
+  background: #1e40af;
+  padding: 5px;
+  border-radius: 6px;
+  margin-top: 4px;
 }

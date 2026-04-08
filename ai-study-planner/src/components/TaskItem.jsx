@@ -75,7 +75,7 @@ function TaskItem({
 
       <div>
         {plan.map((p, i) => (
-          <p key={i} className="plan-text">{p}</p>
+          <p key={i} className="plan-text">📅 {p}</p>
         ))}
       </div>
     </div>

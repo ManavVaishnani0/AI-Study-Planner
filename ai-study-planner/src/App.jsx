@@ -44,18 +44,80 @@ function App() {
   };
 
   const generatePlan = (task) => {
-    const today = new Date();
-    const dueDate = new Date(task.deadline);
+  const today = new Date();
+  const dueDate = new Date(task.deadline);
 
-    const days = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
-    if (days <= 0) return ["Deadline passed"];
+  let totalDays = Math.ceil(
+    (dueDate - today) / (1000 * 60 * 60 * 24)
+  );
 
-    const hoursPerDay = (task.hours / days).toFixed(2);
+  if (totalDays <= 0) return ["Deadline passed"];
 
-    return Array.from({ length: days }, (_, i) =>
-      `Day ${i + 1}: ${hoursPerDay} hrs`
-    );
-  };
+  let totalHours = Number(task.hours);
+  let remainingHours = totalHours;
+
+  const plan = [];
+
+  // 🔥 CASE 1: <= 3 days → daily
+  if (totalDays <= 3) {
+    for (let i = 1; i <= totalDays; i++) {
+      let hours = Math.ceil(remainingHours / (totalDays - i + 1));
+      plan.push(`Day ${i}: ${hours} hrs`);
+      remainingHours -= hours;
+    }
+  }
+
+  // 🔥 CASE 2: 4–29 days → 3-day grouping
+  else if (totalDays <= 29) {
+    let groupSize = 3;
+
+    for (let i = 0; i < totalDays; i += groupSize) {
+      let daysInGroup = Math.min(groupSize, totalDays - i);
+
+      let remainingGroups = Math.ceil((totalDays - i) / groupSize);
+
+      let hours = Math.ceil(remainingHours / remainingGroups);
+
+      plan.push(`Days ${i + 1}-${i + daysInGroup}: ${hours} hrs`);
+
+      remainingHours -= hours;
+    }
+  }
+
+  // 🔥 CASE 3: > 29 days → WEEKLY + FIRST WEEK DAILY
+  else {
+    // FIRST WEEK (daily breakdown)
+    let firstWeekDays = Math.min(7, totalDays);
+
+    for (let i = 1; i <= firstWeekDays; i++) {
+      let hours = Math.ceil(remainingHours / (totalDays - i + 1));
+      plan.push(`Day ${i}: ${hours} hrs`);
+      remainingHours -= hours;
+    }
+
+    // Remaining weeks
+    let remainingDays = totalDays - firstWeekDays;
+    let weekStart = firstWeekDays + 1;
+
+    while (remainingDays > 0) {
+      let daysInWeek = Math.min(7, remainingDays);
+
+      let remainingWeeks = Math.ceil(remainingDays / 7);
+
+      let hours = Math.ceil(remainingHours / remainingWeeks);
+
+      plan.push(
+        `Week (${weekStart}-${weekStart + daysInWeek - 1}): ${hours} hrs`
+      );
+
+      remainingHours -= hours;
+      remainingDays -= daysInWeek;
+      weekStart += 7;
+    }
+  }
+
+  return plan;
+};
 
   const sortedTasks = [...tasks].sort(
     (a, b) => new Date(a.deadline) - new Date(b.deadline)
