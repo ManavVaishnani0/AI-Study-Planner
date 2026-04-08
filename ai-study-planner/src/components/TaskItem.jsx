@@ -9,10 +9,11 @@ function TaskItem({
 }) {
   const [plan, setPlan] = useState([]);
   const [editing, setEditing] = useState(false);
-  const [newName, setNewName] = useState(task.name);
+  const [newName, setNewName] = useState(task.subject);
 
   return (
     <div className="task-item">
+      {/* Subject */}
       <div>
         {editing ? (
           <input
@@ -25,15 +26,29 @@ function TaskItem({
               textDecoration: task.completed ? "line-through" : "none",
             }}
           >
-            {task.name}
+            {task.subject}
           </p>
         )}
 
         <small>
           {task.hours} hrs • Due: {task.deadline}
         </small>
+
+        {/* 🔥 Show Topics */}
+        <div>
+          {task.topics && task.topics.length > 0 ? (
+            task.topics.map((t, i) => (
+              <p key={i} style={{ fontSize: "12px", margin: "2px 0" }}>
+                • {t.name} ({t.difficulty})
+              </p>
+            ))
+          ) : (
+            <p style={{ fontSize: "12px" }}>No topics</p>
+          )}
+        </div>
       </div>
 
+      {/* Buttons */}
       <div className="task-buttons">
         <button
           className="complete-btn"
@@ -46,14 +61,19 @@ function TaskItem({
           <button
             className="edit-btn"
             onClick={() => {
-              editTask(task.id, newName);
+              if (newName.trim() !== "") {
+                editTask(task.id, newName);
+              }
               setEditing(false);
             }}
           >
             Save
           </button>
         ) : (
-          <button className="edit-btn" onClick={() => setEditing(true)}>
+          <button
+            className="edit-btn"
+            onClick={() => setEditing(true)}
+          >
             Edit
           </button>
         )}
@@ -73,9 +93,12 @@ function TaskItem({
         </button>
       </div>
 
+      {/* Plan Output */}
       <div>
         {plan.map((p, i) => (
-          <p key={i} className="plan-text">📅 {p}</p>
+          <p key={i} className="plan-text">
+            📅 {p}
+          </p>
         ))}
       </div>
     </div>

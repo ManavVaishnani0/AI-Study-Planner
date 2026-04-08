@@ -9,14 +9,15 @@ body {
 .app-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* better for scrolling */
   min-height: 100vh;
+  padding-top: 40px;
 }
 
 /* Main card */
 .card {
   background: #1e293b;
-  padding: 30px;
+  padding: 25px;
   width: 450px;
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -30,10 +31,10 @@ h1 {
 }
 
 /* Inputs */
-input {
+input, select {
   width: 100%;
-  padding: 12px;
-  margin: 8px 0;
+  padding: 10px;
+  margin: 6px 0;
   border-radius: 8px;
   border: none;
   outline: none;
@@ -43,15 +44,21 @@ input {
 
 /* Buttons */
 button {
-  padding: 10px;
+  padding: 8px 10px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   margin-top: 5px;
   font-weight: bold;
+  transition: 0.2s;
 }
 
-/* Primary button */
+/* Hover effect */
+button:hover {
+  opacity: 0.85;
+}
+
+/* Default button */
 button {
   background: #3b82f6;
   color: white;
@@ -77,6 +84,12 @@ button {
   color: #cbd5f5;
 }
 
+/* Topic text */
+.task-item div p {
+  font-size: 12px;
+  margin: 2px 0;
+}
+
 /* Buttons group */
 .task-buttons {
   margin-top: 8px;
@@ -85,7 +98,7 @@ button {
   flex-wrap: wrap;
 }
 
-/* Different buttons */
+/* Button colors */
 .delete-btn {
   background: #ef4444;
 }
@@ -108,4 +121,5 @@ button {
   padding: 5px;
   border-radius: 6px;
   margin-top: 4px;
+  font-size: 13px;
 }

@@ -14,20 +14,18 @@ function App() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  const addTask = (name, hours, deadline) => {
+  const addTask = (subject, hours, topics, deadline) => {
     const newTask = {
       id: Date.now(),
-      subject: name,
+      subject,
+      hours,
       deadline,
       completed: false,
-      topics: [
-        { name: "Topic 1", difficulty: "easy" },
-        { name: "Topic 2", difficulty: "medium" }
-      ]
+      topics
     };
-    setTasks([...tasks, newTask]);
-  };
 
+  setTasks([...tasks, newTask]);
+  };
   const deleteTask = (id) => {
     setTasks(tasks.filter(task => task.id !== id));
   };
@@ -41,9 +39,9 @@ function App() {
 
   const editTask = (id, newName) => {
     const updated = tasks.map(task =>
-      task.id === id ? { ...task, name: newName } : task
+      task.id === id ? { ...task, subject: newName } : task
     );
-    setTasks(updated);
+  setTasks(updated);
   };
 
   const estimateTopicTime = (difficulty) => {
@@ -53,12 +51,6 @@ function App() {
     return 3;
   };
 
-  const estimateTopicTime = (difficulty) => {
-  if (difficulty === "easy") return 2;
-  if (difficulty === "medium") return 4;
-  if (difficulty === "hard") return 6;
-  return 3;
-};
 
 const generatePlan = (task) => {
   const today = new Date();
@@ -71,10 +63,7 @@ const generatePlan = (task) => {
   if (totalDays <= 0) return ["Deadline passed"];
 
   // 🔥 STEP 1: Calculate total hours from topics
-  let totalHours = task.topics.reduce(
-    (sum, topic) => sum + estimateTopicTime(topic.difficulty),
-    0
-  );
+  let totalHours = Number(task.hours);
 
   let remainingHours = totalHours;
   const plan = [];
@@ -135,7 +124,7 @@ const generatePlan = (task) => {
 
   plan.push("------ Topic Breakdown ------");
 
-  task.topics.forEach((topic) => {
+  (task.topics || []).forEach((topic) => {
     let hours = estimateTopicTime(topic.difficulty);
     plan.push(`${topic.name} (${topic.difficulty}) → ${hours} hrs`);
   });

@@ -2,40 +2,62 @@ import { useState } from "react";
 
 function TaskForm({ addTask }) {
   const [subject, setSubject] = useState("");
+  const [hours, setHours] = useState("");
   const [deadline, setDeadline] = useState("");
 
   const [topics, setTopics] = useState([
     { name: "", difficulty: "easy" }
   ]);
 
+  // Handle topic changes
   const handleTopicChange = (index, field, value) => {
     const updated = [...topics];
     updated[index][field] = value;
     setTopics(updated);
   };
 
+  // Add new topic
   const addTopic = () => {
     setTopics([...topics, { name: "", difficulty: "easy" }]);
   };
 
+  // Submit form
   const handleSubmit = () => {
-    if (!subject || !deadline) return;
+    if (!subject || !deadline || !hours) return;
 
-    addTask(subject, topics, deadline);
+    // Remove empty topics
+    const validTopics = topics.filter(
+      (t) => t.name.trim() !== ""
+    );
 
+    addTask(subject, hours, validTopics, deadline);
+
+    // Reset fields
     setSubject("");
+    setHours("");
     setDeadline("");
     setTopics([{ name: "", difficulty: "easy" }]);
   };
 
   return (
     <div>
+      {/* Subject */}
       <input
+        type="text"
         placeholder="Subject"
         value={subject}
         onChange={(e) => setSubject(e.target.value)}
       />
 
+      {/* Hours */}
+      <input
+        type="number"
+        placeholder="Total Hours"
+        value={hours}
+        onChange={(e) => setHours(e.target.value)}
+      />
+
+      {/* Deadline */}
       <input
         type="date"
         value={deadline}
@@ -44,8 +66,12 @@ function TaskForm({ addTask }) {
 
       <h3>Topics</h3>
 
+      {/* Topics list */}
       {topics.map((topic, index) => (
-        <div key={index}>
+        <div
+          key={index}
+          style={{ display: "flex", gap: "10px", marginBottom: "5px" }}
+        >
           <input
             placeholder="Topic name"
             value={topic.name}
@@ -67,8 +93,8 @@ function TaskForm({ addTask }) {
         </div>
       ))}
 
+      {/* Buttons */}
       <button onClick={addTopic}>+ Add Topic</button>
-
       <button onClick={handleSubmit}>Add Subject</button>
     </div>
   );
